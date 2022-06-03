@@ -10,15 +10,16 @@
   <body>
     <div id="root"></div>
     <script type="text/babel">
+      let days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
       ReactDOM.render(
               <ul>
-                <li>Monday</li>
-                <li>Tuesday</li>
-                <li>Wednesday</li>
-                <li>Thursday</li>
-                <li>Friday</li>
-                <li>Saturday</li>
-                <li>Sunday</li>
+                <li>{days[0]}</li>
+                <li>{days[1]}</li>
+                <li>{days[2]}</li>
+                <li>{days[3]}</li>
+                <li>{days[4]}</li>
+                <li>{days[5]}</li>
+                <li>{days[6].toUpperCase()}</li>
               </ul>,
               document.getElementById("root")
       );
