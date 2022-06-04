@@ -10,17 +10,24 @@
   <body>
     <div id="root"></div>
     <script type="text/babel">
-      let days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+      function DayList () {
+        let days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
+        return (
+          <ul>
+            <li>{days[0]}</li>
+            <li>{days[1]}</li>
+            <li>{days[2]}</li>
+            <li>{days[3]}</li>
+            <li>{days[4]}</li>
+            <li>{days[5]}</li>
+            <li>{days[6].toUpperCase()}</li>
+          </ul>
+        );
+      }
+
       ReactDOM.render(
-              <ul>
-                <li>{days[0]}</li>
-                <li>{days[1]}</li>
-                <li>{days[2]}</li>
-                <li>{days[3]}</li>
-                <li>{days[4]}</li>
-                <li>{days[5]}</li>
-                <li>{days[6].toUpperCase()}</li>
-              </ul>,
+              <DayList />,
               document.getElementById("root")
       );
     </script>
