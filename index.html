@@ -10,28 +10,55 @@
   <body>
     <div id="root"></div>
     <script type="text/babel">
-      function Header () {
+      const DISHES = [
+        "Black Bean Soup",
+        "Macaroni and Cheese",
+        "Salmon and Potatoes",
+        "Pizza"
+      ];
+
+      function Header (props)
+      {
+        console.log(props);
+
         return (
           <header>
-            <h1>Eve's Kitchen</h1>
+            <h1>{props.name}'s Kitchen</h1>
           </header>
         );
       }
 
-      function Main () {
+      function Main (props)
+      {
         return (
           <section>
-            <p>We serve the most delicious food around</p>
+            <img height={200} src="https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" />
+            <ul>
+              {props.dishes.map((dish, i) => (
+                <li key={i}>{dish}</li>
+              ))}
+            </ul>
           </section>
         );
       }
 
-      function App () {
+      function App ()
+      {
         return (
-          <div>
-            <Header />
-            <Main />
-          </div>
+          <React.Fragment>
+            <Header name="Cindy" />
+            <Main adjective="amazing" dishes={DISHES} />
+            <Footer year={new Date().getFullYear()} />
+          </React.Fragment>
+        );
+      }
+
+      function Footer (props)
+      {
+        return (
+          <footer>
+            <p>Copyright {props.year}</p>
+          </footer>
         );
       }
 
