@@ -2,22 +2,34 @@ import logo from './logo.svg';
 import './App.css';
 import {useState} from "react";
 
+function useInput (initialValue)
+{
+    const [value, setValue] = useState(initialValue);
+    return [
+        {
+            value,
+            onChange: (event) => setValue(event.target.value)
+        },
+        () => setValue(initialValue)
+    ]
+}
+
 function App({ library }) {
-    const [title, setTitle] = useState("");
-    const [color, setColor] = useState("#000000");
+    const [titleProps, resetTitle] = useInput("");
+    const [colorProps, resetColor] = useInput("#000000");
 
     const submit = (event) => {
         event.preventDefault();
-        alert(`${title} ${color}`);
+        alert(`${titleProps.value} ${colorProps.value}`);
 
-        setTitle("");
-        setColor("#000000");
+        resetTitle();
+        resetColor();
     };
 
     return (
         <form onSubmit={submit}>
-            <input type="text" value={title} onChange={event => setTitle(event.target.value)} placeholder="color title..." />
-            <input type="color" value={color} onChange={event => setColor(event.target.value)} />
+            <input {...titleProps} type="text" placeholder="color title..." />
+            <input {...colorProps} type="color" />
             <button>Add</button>
         </form>
     );
