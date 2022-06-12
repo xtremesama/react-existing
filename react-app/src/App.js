@@ -1,37 +1,51 @@
 import logo from './logo.svg';
 import './App.css';
-import {useState} from "react";
+import {useState, useEffect} from "react";
 
-function useInput (initialValue)
+function GithubUser({ name, location, avatar })
 {
-    const [value, setValue] = useState(initialValue);
-    return [
-        {
-            value,
-            onChange: (event) => setValue(event.target.value)
-        },
-        () => setValue(initialValue)
-    ]
+    return (
+        <div>
+            <h1>{name}</h1>
+            <h1>{location}</h1>
+            <img src={avatar} height={100} />
+        </div>
+    );
 }
 
-function App({ library }) {
-    const [titleProps, resetTitle] = useInput("");
-    const [colorProps, resetColor] = useInput("#000000");
+function App () {
+    const [data, setData] = useState(null);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(null);
 
-    const submit = (event) => {
-        event.preventDefault();
-        alert(`${titleProps.value} ${colorProps.value}`);
+    useEffect(() => {
+        setLoading(true);
 
-        resetTitle();
-        resetColor();
-    };
+        fetch("https://api.github.com/users/xtremesama")
+            .then((response) => response.json())
+            .then(setData)
+            .then(() => setLoading(false))
+            .catch(setError);
+    }, []);
+
+    if (loading)
+    {
+        return <h1>Loading...</h1>;
+    }
+
+    if (error)
+    {
+        return <pre>{JSON.stringify(error)}</pre>;
+    }
+
+    if (!data)
+    {
+        return null;
+    }
+
 
     return (
-        <form onSubmit={submit}>
-            <input {...titleProps} type="text" placeholder="color title..." />
-            <input {...colorProps} type="color" />
-            <button>Add</button>
-        </form>
+        <GithubUser name={data.login} location={data.html_url} avatar={data.avatar_url} />
     );
 }
 
