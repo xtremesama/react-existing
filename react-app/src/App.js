@@ -1,69 +1,41 @@
 import logo from './logo.svg';
 import './App.css';
-import {useState, useEffect} from "react";
 
-const query = `
-query {
-    allLifts {
-        name
-        elevationGain
-        status
+const tahoe_peaks = [
+    { name: "Freel", elevation: 10891 },
+    { name: "Monuments", elevation: 10067 },
+    { name: "Pyramid", elevation: 9983 },
+    { name: "Tallac", elevation: 9735 },
+];
+
+function List ({ data, renderItem, renderEmpty })
+{
+    if (!data.length)
+    {
+        return renderEmpty();
     }
-}`;
 
-const options = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({query})
+    return (
+        <ul>
+            {data.map((item) => (
+                <li key={item.name}>
+                    {renderItem(item)}
+                </li>
+            ))}
+        </ul>
+    )
 }
 
-function Lift ({ name, elevationGain, status })
+function App ()
 {
     return (
-        <div>
-            <h1>{name}</h1>
-            <p>{elevationGain} {status}</p>
-        </div>
-    );
-}
-
-function App () {
-    const [data, setData] = useState(null);
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(null);
-
-    useEffect(() => {
-        setLoading(true);
-
-        fetch("https://snowtooth.moonhighway.com", options)
-            .then((response) => response.json())
-            .then(setData)
-            .then(() => setLoading(false))
-            .catch(setError);
-    }, []);
-
-    if (loading)
-    {
-        return <h1>Loading...</h1>;
-    }
-
-    if (error)
-    {
-        return <pre>{JSON.stringify(error)}</pre>;
-    }
-
-    if (!data)
-    {
-        return null;
-    }
-
-
-    return (
-        <div>
-            {data.data.allLifts.map(lift => (
-                <Lift name={lift.name} elevationGain={lift.elevationGain} status={lift.status} />
-            ))}
-        </div>
+        <List
+            data={tahoe_peaks}
+            renderEmpty={<p>This list is empty</p>}
+            renderItem={(item) => (
+                <>{item.name} - {item.elevation}</>
+            )}
+        />
     );
 }
 
