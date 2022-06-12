@@ -1,42 +1,63 @@
 import logo from './logo.svg';
 import './App.css';
+import { Link, Outlet } from "react-router-dom";
 
-const tahoe_peaks = [
-    { name: "Freel", elevation: 10891 },
-    { name: "Monuments", elevation: 10067 },
-    { name: "Pyramid", elevation: 9983 },
-    { name: "Tallac", elevation: 9735 },
-];
-
-function List ({ data, renderItem, renderEmpty })
+export function Home ()
 {
-    if (!data.length)
-    {
-        return renderEmpty();
-    }
-
     return (
-        <ul>
-            {data.map((item) => (
-                <li key={item.name}>
-                    {renderItem(item)}
-                </li>
-            ))}
-        </ul>
+        <div>
+            <nav>
+                <Link to="/">Home</Link>
+                <Link to="/about">About</Link>
+                <Link to="/contact">Contact</Link>
+            </nav>
+            <h1>My Website</h1>
+        </div>
     )
 }
 
-function App ()
+export function About ()
 {
     return (
-        <List
-            data={tahoe_peaks}
-            renderEmpty={<p>This list is empty</p>}
-            renderItem={(item) => (
-                <>{item.name} - {item.elevation}</>
-            )}
-        />
+        <div>
+            <nav>
+                <Link to="/">Home</Link>
+                <Link to="/about">About</Link>
+                <Link to="/contact">Contact</Link>
+            </nav>
+            <h1>About Us</h1>
+            <Outlet />
+        </div>
     );
 }
 
-export default App;
+export function History ()
+{
+    return (
+        <div>
+            <h1>Our History</h1>
+        </div>
+    );
+}
+
+export function Contact ()
+{
+    return (
+        <div>
+            <nav>
+                <Link to="/">Home</Link>
+                <Link to="/about">About</Link>
+                <Link to="/contact">Contact</Link>
+            </nav>
+            <h1>Contact Us</h1>
+        </div>
+    );
+}
+
+export function App ()
+{
+    return (
+        <Home />
+    );
+}
+
